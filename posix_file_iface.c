@@ -21,14 +21,56 @@
 DSML_STATIC int32 dsml_posix_file_open(DSML_CONTEXT_ARG, struct dsml_file_tag * const f, uint16 oflag)
 {
 	int32 res;
-	// TODO
+	int _fd;
+	int _oflag;
+	struct dsml_posix_file_userdata_tag * userdata;
+
+	DSML_FUNCTION_BEGIN();
+	DSML_ASSERT_POINTER_CHECK(&DSML_CONTEXT);
+	DSML_ASSERT_POINTER_CHECK(f);
+	DSML_ASSERT_POINTER_CHECK(f->userdata);
+
+	userdata = (struct dsml_posix_file_userdata_tag*)f->userdata;
+
+	DSML_ASSERT_POINTER_CHECK(userdata->filename);
+
+	oflag &= DSML_FILE_OFLAG_MASK;
+	res = INT32_C(0);
+
+	if(oflag == DSML_FILE_OFLAG_READ)		{ _oflag = O_RDONLY; }
+	else if(oflag == DSML_FILE_OFLAG_WRITE)	{ _oflag = O_WRONLY; }
+	else if(oflag == DSML_FILE_OFLAG_RW)	{ _oflag = O_RDWR; }
+	else									{ res = -(int32)EINVAL; }
+
+	if(res == INT32_C(0))
+	{
+		_fd = open(userdata->filename, _oflag);
+		if(_fd >= 0)	{ res = (f->fd = (int32)_fd); }
+		else			{ res = -(int32)errno; }
+	} else { /* nothing */ }
+
+	DSML_FUNCTION_END();
 	return res;
 }
 
 DSML_STATIC int32 dsml_posix_file_close(DSML_CONTEXT_ARG, struct dsml_file_tag * const f)
 {
 	int32 res;
-	// TODO
+	struct dsml_posix_file_userdata_tag * userdata;
+
+	DSML_FUNCTION_BEGIN();
+	DSML_ASSERT_POINTER_CHECK(&DSML_CONTEXT);
+	DSML_ASSERT_POINTER_CHECK(f);
+	DSML_ASSERT_POINTER_CHECK(f->userdata);
+
+	userdata = (struct dsml_posix_file_userdata_tag*)f->userdata;
+
+	DSML_ASSERT_POINTER_CHECK(userdata->filename);
+
+	if(!close(f->fd))	{ res = INT32_C(0); f->fd = INT32_C(-1); }
+	else				{ res = -(int32)errno; }
+
+	DSML_FUNCTION_END();
 	return res;
 }
 
