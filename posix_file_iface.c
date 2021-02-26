@@ -77,14 +77,62 @@ DSML_STATIC int32 dsml_posix_file_close(DSML_CONTEXT_ARG, struct dsml_file_tag *
 DSML_STATIC int32 dsml_posix_file_read(DSML_CONTEXT_ARG, struct dsml_file_tag * const f, void * buff, uint32 nbyte, uint32 offset)
 {
 	int32 res;
-	// TODO
+	off_t _off;
+	ssize_t _ssize;
+	struct dsml_posix_file_userdata_tag * userdata;
+
+	DSML_FUNCTION_BEGIN();
+	DSML_ASSERT_POINTER_CHECK(&DSML_CONTEXT);
+	DSML_ASSERT_POINTER_CHECK(f);
+	DSML_ASSERT_POINTER_CHECK(buff);
+	DSML_ASSERT_POINTER_CHECK(f->userdata);
+
+	userdata = (struct dsml_posix_file_userdata_tag*)f->userdata;
+
+	DSML_ASSERT_POINTER_CHECK(userdata->filename);
+
+	_off = lseek((int)f->fd, (off_t)offset, SEEK_SET);
+	if(_off == (off_t)-1)
+	{ res = -(int32)errno; }
+	else
+	{
+		_ssize = read((int)f->fd, buff, (size_t)nbyte);
+		if(_ssize == (ssize_t)-1)	{ res = -(int32)errno; }
+		else						{ res = (int32)_ssize; }
+	}
+
+	DSML_FUNCTION_END();
 	return res;
 }
 
 DSML_STATIC int32 dsml_posix_file_write(DSML_CONTEXT_ARG, struct dsml_file_tag * const f, const void * buff, uint32 nbyte, uint32 offset)
 {
 	int32 res;
-	// TODO
+	off_t _off;
+	ssize_t _ssize;
+	struct dsml_posix_file_userdata_tag * userdata;
+
+	DSML_FUNCTION_BEGIN();
+	DSML_ASSERT_POINTER_CHECK(&DSML_CONTEXT);
+	DSML_ASSERT_POINTER_CHECK(f);
+	DSML_ASSERT_POINTER_CHECK(buff);
+	DSML_ASSERT_POINTER_CHECK(f->userdata);
+
+	userdata = (struct dsml_posix_file_userdata_tag*)f->userdata;
+
+	DSML_ASSERT_POINTER_CHECK(userdata->filename);
+
+	_off = lseek((int)f->fd, (off_t)offset, SEEK_SET);
+	if(_off == (off_t)-1)
+	{ res = -(int32)errno; }
+	else
+	{
+		_ssize = write((int)f->fd, buff, (size_t)nbyte);
+		if(_ssize == (ssize_t)-1)	{ res = -(int32)errno; }
+		else						{ res = (int32)_ssize; }
+	}
+
+	DSML_FUNCTION_END();
 	return res;
 }
 
