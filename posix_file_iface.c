@@ -139,7 +139,23 @@ DSML_STATIC int32 dsml_posix_file_write(DSML_CONTEXT_ARG, struct dsml_file_tag *
 DSML_STATIC int32 dsml_posix_file_size(DSML_CONTEXT_ARG, const struct dsml_file_tag * const f)
 {
 	int32 res;
-	// TODO
+	struct stat _stat;
+	struct dsml_posix_file_userdata_tag * userdata;
+
+	DSML_FUNCTION_BEGIN();
+	DSML_ASSERT_POINTER_CHECK(&DSML_CONTEXT);
+	DSML_ASSERT_POINTER_CHECK(f);
+	DSML_ASSERT_POINTER_CHECK(f->userdata);
+
+	userdata = (struct dsml_posix_file_userdata_tag*)f->userdata;
+
+	DSML_ASSERT_POINTER_CHECK(userdata->filename);
+
+	res = stat((const char*)userdata->filename, &_stat);
+	if(res == INT32_C(-1))	{ res = -(int32)errno; }
+	else					{ res = (int32)_stat.st_size; }
+
+	DSML_FUNCTION_END();
 	return res;
 }
 
