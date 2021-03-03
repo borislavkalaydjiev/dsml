@@ -19,12 +19,29 @@
 
 void dsml_tools_rx_uint8(void * const dest, uint8 ** src)
 {
-	// TODO
+	register uint8 * s;
+	DSML_FUNCTION_BEGIN();
+	DSML_ASSERT_POINTER_CHECK(dest);
+	DSML_ASSERT_POINTER_CHECK(src);
+	DSML_ASSERT_POINTER_CHECK(src[0]);
+	s = src[0];
+	*((uint8*)dest) = UINT8_C(0)
+		| ((uint8)s[0]) << 0;
+	*src += sizeof(uint8);
+	DSML_FUNCTION_END();
 }
 
 void dsml_tools_tx_uint8(void * const dest, uint8 ** src)
 {
-	// TODO
+	register uint8 * s;
+	DSML_FUNCTION_BEGIN();
+	DSML_ASSERT_POINTER_CHECK(dest);
+	DSML_ASSERT_POINTER_CHECK(src);
+	DSML_ASSERT_POINTER_CHECK(src[0]);
+	s = src[0];
+	*s = *((uint8*)dest);
+	*src += sizeof(uint8);
+	DSML_FUNCTION_END();
 }
 
 void dsml_tools_rx_uint16(void * const dest, uint8 ** src)
