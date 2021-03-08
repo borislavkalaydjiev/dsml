@@ -19,42 +19,132 @@
 
 void dsml_tools_rx_uint8(void * const dest, uint8 ** src)
 {
-	// TODO
+	register uint8 * s;
+	DSML_FUNCTION_BEGIN();
+	DSML_ASSERT_POINTER_CHECK(dest);
+	DSML_ASSERT_POINTER_CHECK(src);
+	DSML_ASSERT_POINTER_CHECK(src[0]);
+	s = src[0];
+	*((uint8*)dest) = UINT8_C(0)
+		| ((uint8)s[0]) << 0;
+	*src += sizeof(uint8);
+	DSML_FUNCTION_END();
 }
 
 void dsml_tools_tx_uint8(void * const dest, uint8 ** src)
 {
-	// TODO
+	register uint8 * s;
+	DSML_FUNCTION_BEGIN();
+	DSML_ASSERT_POINTER_CHECK(dest);
+	DSML_ASSERT_POINTER_CHECK(src);
+	DSML_ASSERT_POINTER_CHECK(src[0]);
+	s = src[0];
+	*s = *((uint8*)dest);
+	*src += sizeof(uint8);
+	DSML_FUNCTION_END();
 }
 
 void dsml_tools_rx_uint16(void * const dest, uint8 ** src)
 {
-	// TODO
+	register uint8 * s;
+	DSML_FUNCTION_BEGIN();
+	DSML_ASSERT_POINTER_CHECK(dest);
+	DSML_ASSERT_POINTER_CHECK(src);
+	DSML_ASSERT_POINTER_CHECK(src[0]);
+	s = src[0];
+	*((uint16*)dest) = UINT16_C(0)
+		| ((uint16)s[0]) << 8
+		| ((uint16)s[1]) << 0;
+	*src += sizeof(uint16);
+	DSML_FUNCTION_END();
 }
 
 void dsml_tools_tx_uint16(void * const dest, uint8 ** src)
 {
-	// TODO
+	register uint8 * s;
+	DSML_FUNCTION_BEGIN();
+	DSML_ASSERT_POINTER_CHECK(dest);
+	DSML_ASSERT_POINTER_CHECK(src);
+	DSML_ASSERT_POINTER_CHECK(src[0]);
+	s = src[0];
+	*s++ = (*((uint16*)dest)) >> 8;
+	*s = (*((uint16*)dest)) >> 0;
+	*src += sizeof(uint16);
+	DSML_FUNCTION_END();
 }
 
 void dsml_tools_rx_uint32(void * const dest, uint8 ** src)
 {
-	// TODO
+	register uint8 * s;
+	DSML_FUNCTION_BEGIN();
+	DSML_ASSERT_POINTER_CHECK(dest);
+	DSML_ASSERT_POINTER_CHECK(src);
+	DSML_ASSERT_POINTER_CHECK(src[0]);
+	s = src[0];
+	*((uint32*)dest) = UINT32_C(0)
+		| ((uint32)s[0]) << 24
+		| ((uint32)s[1]) << 16
+		| ((uint32)s[2]) << 8
+		| ((uint32)s[3]) << 0;
+	*src += sizeof(uint32);
+	DSML_FUNCTION_END();
 }
 
 void dsml_tools_tx_uint32(void * const dest, uint8 ** src)
 {
-	// TODO
+	register uint8 * s;
+	DSML_FUNCTION_BEGIN();
+	DSML_ASSERT_POINTER_CHECK(dest);
+	DSML_ASSERT_POINTER_CHECK(src);
+	DSML_ASSERT_POINTER_CHECK(src[0]);
+	s = src[0];
+	*s++ = (*((uint32*)dest)) >> 24;
+	*s++ = (*((uint32*)dest)) >> 16;
+	*s++ = (*((uint32*)dest)) >> 8;
+	*s = (*((uint32*)dest)) >> 0;
+	*src += sizeof(uint32);
+	DSML_FUNCTION_END();
 }
 #ifndef HOST_IS_XC167
 void dsml_tools_rx_uint64(void * const dest, uint8 ** src)
 {
-	// TODO
+	register uint8 * s;
+	DSML_FUNCTION_BEGIN();
+	DSML_ASSERT_POINTER_CHECK(dest);
+	DSML_ASSERT_POINTER_CHECK(src);
+	DSML_ASSERT_POINTER_CHECK(src[0]);
+	s = src[0];
+	*((uint64*)dest) = UINT64_C(0)
+		| ((uint64)s[0]) << 56
+		| ((uint64)s[1]) << 48
+		| ((uint64)s[2]) << 40
+		| ((uint64)s[3]) << 32
+		| ((uint64)s[4]) << 24
+		| ((uint64)s[5]) << 16
+		| ((uint64)s[6]) << 8
+		| ((uint64)s[7]) << 0;
+	*src += sizeof(uint64);
+	DSML_FUNCTION_END();
 }
 
 void dsml_tools_tx_uint64(void * const dest, uint8 ** src)
 {
-	// TODO
+	register uint8 * s;
+	DSML_FUNCTION_BEGIN();
+	DSML_ASSERT_POINTER_CHECK(dest);
+	DSML_ASSERT_POINTER_CHECK(src);
+	DSML_ASSERT_POINTER_CHECK(src[0]);
+	s = src[0];
+	*s++ = (*((uint64*)dest)) >> 56;
+	*s++ = (*((uint64*)dest)) >> 48;
+	*s++ = (*((uint64*)dest)) >> 40;
+	*s++ = (*((uint64*)dest)) >> 32;
+	*s++ = (*((uint64*)dest)) >> 24;
+	*s++ = (*((uint64*)dest)) >> 16;
+	*s++ = (*((uint64*)dest)) >> 8;
+	*s = (*((uint64*)dest)) >> 0;
+	*src += sizeof(uint64);
+	DSML_FUNCTION_END();
 }
 #endif /* #ifndef HOST_IS_XC167 */
 
